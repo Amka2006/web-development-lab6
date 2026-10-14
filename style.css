@@ -1,0 +1,376 @@
+/* ========== Design token ========== */
+:root {
+  --bg: #f4f7fa;
+  --surface: #ffffff;
+  --text: #1d2a3a;
+  --muted: #5d6c7d;
+  --heading: #0e2a47;
+  --line: #dbe3ec;
+  --link: #1d4e89;
+  --accent: #1d4e89;
+  --night: #0e2a47;
+  --steppe: #4f7f52;
+  --gold: #e6a923;
+  --shadow: 0 10px 24px rgba(14, 42, 71, 0.15);
+  --radius: 16px;
+  --dur: 0.35s;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --font-head: "Philosopher", Georgia, serif;
+  --font-body: "Nunito Sans", Arial, sans-serif;
+  color-scheme: light;
+}
+
+/* ========== Dark mode ========== */
+[data-theme="dark"] {
+  --bg: #0b1624;
+  --surface: #14233a;
+  --text: #e6edf5;
+  --muted: #9db0c6;
+  --heading: #f2f6fb;
+  --line: #243650;
+  --link: #8bbcf0;
+  --accent: #2f6db5;
+  --shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+  color-scheme: dark;
+}
+
+/* ========== Суурь ========== */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 72px; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  overflow-x: hidden;
+  transition: background var(--dur), color var(--dur);
+}
+
+h1, h2, h3, p { overflow-wrap: break-word; }
+a { color: var(--link); }
+:focus-visible { outline: 3px solid var(--gold); outline-offset: 2px; }
+
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* ========== Scroll progress (зөвхөн CSS) ========== */
+.progress {
+  position: fixed; top: 0; left: 0; z-index: 50;
+  width: 100%; height: 4px;
+  background: var(--gold);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+}
+
+@supports (animation-timeline: scroll()) {
+  .progress { animation: grow linear both; animation-timeline: scroll(root); }
+}
+
+@keyframes grow { to { transform: scaleX(1); } }
+
+/* ========== Header (mobile-first) ========== */
+.site-header {
+  position: sticky; top: 0; z-index: 20;
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+  padding: 10px 16px;
+  background: var(--night);
+  border-bottom: 3px solid var(--gold);
+}
+
+.logo { font-family: var(--font-head); font-size: 24px; font-weight: 700; color: #fff; text-decoration: none; }
+.header-tools { display: flex; gap: 8px; }
+
+.theme-toggle, .menu-toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px;
+  background: transparent; border: 1px solid rgba(255, 255, 255, 0.35); border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.theme-toggle:hover, .menu-toggle:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); }
+
+/* Нар ↔ сар */
+.theme-icon {
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(230, 169, 35, 0.35);
+  transition: transform 0.6s var(--ease), background 0.4s, box-shadow 0.4s;
+}
+
+[data-theme="dark"] .theme-icon {
+  background: transparent;
+  box-shadow: inset -6px -3px 0 0 #cfe0f5;
+  transform: rotate(-25deg);
+}
+
+.menu-icon, .menu-icon::before, .menu-icon::after {
+  display: block; width: 20px; height: 2px; background: #fff; border-radius: 2px;
+  transition: transform 0.25s, top 0.25s, background 0.25s;
+}
+.menu-icon { position: relative; }
+.menu-icon::before, .menu-icon::after { content: ""; position: absolute; left: 0; }
+.menu-icon::before { top: -6px; }
+.menu-icon::after { top: 6px; }
+.menu-toggle[aria-expanded="true"] .menu-icon { background: transparent; }
+.menu-toggle[aria-expanded="true"] .menu-icon::before { top: 0; transform: rotate(45deg); }
+.menu-toggle[aria-expanded="true"] .menu-icon::after { top: 0; transform: rotate(-45deg); }
+
+.navbar { display: none; flex-basis: 100%; padding: 8px 0; }
+.navbar.open { display: block; }
+.nav-list { display: flex; flex-direction: column; margin: 0; padding: 0; list-style: none; }
+
+.nav-link {
+  display: block; padding: 12px 8px;
+  color: #c3d3e6; text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: color 0.2s, padding-left 0.2s;
+}
+.nav-link:hover, .nav-link:focus-visible { color: #fff; padding-left: 16px; }
+
+/* ========== Hero ========== */
+.hero {
+  position: relative; overflow: hidden;
+  min-height: 400px; padding: 48px 20px;
+  background: linear-gradient(180deg, #0e2a47 0%, #1d4e89 55%, #f0b45a 100%);
+}
+
+.hero::before, .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; }
+.hero::before {
+  height: 38%; background: #2d6296;
+  clip-path: polygon(0 100%, 0 58%, 12% 32%, 22% 52%, 35% 14%, 50% 56%, 62% 36%, 78% 62%, 90% 26%, 100% 50%, 100% 100%);
+}
+.hero::after {
+  height: 20%; background: var(--steppe);
+  clip-path: polygon(0 100%, 0 62%, 18% 36%, 40% 66%, 60% 30%, 82% 64%, 100% 40%, 100% 100%);
+}
+
+.hero-sun {
+  position: absolute; right: 10%; bottom: 28%;
+  width: 70px; height: 70px; border-radius: 50%;
+  background: #ffd98a;
+  box-shadow: 0 0 0 14px rgba(255, 217, 138, 0.25), 0 0 0 32px rgba(255, 217, 138, 0.12);
+  animation: bob 6s ease-in-out infinite alternate;
+}
+
+@keyframes bob { to { transform: translateY(-16px); } }
+
+.cloud { position: absolute; left: 0; width: 100px; height: 24px; background: rgba(255, 255, 255, 0.55); border-radius: 24px; animation: drift linear infinite; }
+.c1 { top: 16%; animation-duration: 45s; }
+.c2 { top: 32%; width: 140px; animation-duration: 70s; animation-delay: -25s; }
+
+@keyframes drift { from { transform: translateX(-180px); } to { transform: translateX(calc(100vw + 180px)); } }
+
+.hero-text { position: relative; z-index: 1; max-width: 560px; }
+
+/* --i custom property-оор stagger */
+.hero-text > * {
+  opacity: 0;
+  animation: rise 0.8s var(--ease) forwards;
+  animation-delay: calc(var(--i) * 140ms + 200ms);
+}
+
+@keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+
+.eyebrow { margin: 0 0 8px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; font-size: 13px; color: var(--gold); }
+.hero h1 { margin: 0 0 12px; font-family: var(--font-head); font-size: 32px; line-height: 1.2; color: #fff; }
+.hero p { margin: 0 0 20px; color: #dce8f5; }
+
+.btn {
+  display: inline-block; padding: 12px 26px;
+  font: inherit; font-weight: 700;
+  color: var(--night); background: var(--gold);
+  border: 0; border-radius: 28px; text-decoration: none; cursor: pointer;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s;
+}
+.btn:hover, .btn:focus-visible { transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 18px rgba(0, 0, 0, 0.25); }
+.btn-light { background: #fff; }
+
+/* ========== Хэсэг ========== */
+.section { max-width: 1200px; margin: 0 auto; padding: 44px 16px; }
+.section-title { margin: 0 0 8px; font-family: var(--font-head); font-size: 28px; color: var(--heading); }
+.lead { margin: 0 0 20px; color: var(--muted); }
+
+/* Хээ (meander): хэсгийн гарчгийн доор */
+.section-title::after {
+  content: ""; display: block; width: 120px; height: 14px; margin-top: 8px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='14'%3E%3Cpath d='M1 13V1h14v9H6V5h4' fill='none' stroke='%23e6a923' stroke-width='2'/%3E%3C/svg%3E") repeat-x;
+}
+
+/* ========== Шүүлтүүр ========== */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
+
+.chip {
+  padding: 8px 18px; font: inherit; font-weight: 600;
+  color: var(--text); background: var(--surface);
+  border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer;
+  transition: transform 0.2s var(--ease), background 0.2s, color 0.2s, border-color 0.2s;
+}
+.chip:hover, .chip:focus-visible { transform: translateY(-3px); border-color: var(--accent); }
+.chip[aria-pressed="true"] { color: #fff; background: var(--accent); border-color: var(--accent); }
+
+/* ========== Gallery: 3D flip card ========== */
+.gallery { display: grid; grid-template-columns: 1fr; gap: 24px; }
+
+.card { height: 340px; perspective: 1100px; opacity: 0; outline: none; }
+.card[hidden] { display: none; }
+.card.in { animation: rise 0.7s var(--ease) both; animation-delay: calc(var(--i) * 90ms); }
+
+.card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.8s var(--ease); }
+.card:hover .card-inner,
+.card:focus-within .card-inner,
+.card.flipped .card-inner { transform: rotateY(180deg); }
+.card:focus-visible .face { outline: 3px solid var(--gold); }
+
+.face {
+  position: absolute; inset: 0; overflow: hidden;
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+
+/* Урд тал: зураг (зураг байхгүй бол градиент харагдана) */
+.art { position: relative; background: linear-gradient(180deg, var(--sky-a), var(--sky-b)); }
+.art::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 55%;
+  background: var(--ridge);
+  clip-path: polygon(0 100%, 0 60%, 16% 30%, 30% 58%, 48% 12%, 66% 56%, 82% 34%, 100% 62%, 100% 100%);
+}
+.art img { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease); }
+.card:hover .front img { transform: scale(1.06); }
+
+.art-lake    { --sky-a: #7ec3e8; --sky-b: #d9f0fb; --ridge: #1f6f9c; }
+.art-gobi    { --sky-a: #f2b45d; --sky-b: #fbe3b0; --ridge: #c7863a; }
+.art-khangai { --sky-a: #8fcf9a; --sky-b: #dff3df; --ridge: #3f7a49; }
+.art-altai   { --sky-a: #93a9d4; --sky-b: #eaf0fb; --ridge: #5a6f9c; }
+.art-khentii { --sky-a: #6aa58a; --sky-b: #cfe8da; --ridge: #2d5f4a; }
+.art-steppe  { --sky-a: #f0c978; --sky-b: #f8ecc8; --ridge: #8da84e; }
+.art-terkh   { --sky-a: #6fb3c9; --sky-b: #d3ecf3; --ridge: #34697e; }
+.art-bayan   { --sky-a: #d98d7a; --sky-b: #f6d9cd; --ridge: #8a4d49; }
+
+.badge {
+  position: absolute; top: 12px; left: 12px; z-index: 3;
+  padding: 3px 12px; font-size: 13px; font-weight: 700;
+  color: #0e2a47; background: rgba(255, 255, 255, 0.92); border-radius: 20px;
+}
+
+.cap { position: absolute; left: 0; right: 0; bottom: 0; z-index: 3; padding: 56px 18px 16px; background: linear-gradient(transparent, rgba(8, 20, 36, 0.85)); }
+.cap h3 { margin: 0; font-family: var(--font-head); font-size: 22px; color: #fff; }
+.cap p { margin: 2px 0 0; font-size: 13px; color: #cfe0f5; }
+
+/* Ард тал: зураг + харанхуй давхарга */
+.back {
+  transform: rotateY(180deg);
+  background: linear-gradient(rgba(8, 20, 36, 0.82), rgba(8, 20, 36, 0.94)), var(--img) center / cover, var(--night);
+  border: 2px solid var(--gold);
+}
+.back-body { display: flex; flex-direction: column; justify-content: center; gap: 12px; height: 100%; padding: 22px; color: #e6edf5; }
+.back h3 { margin: 0; font-family: var(--font-head); font-size: 24px; color: var(--gold); }
+.back p { margin: 0; font-size: 15px; color: #dce8f5; }
+.back .btn { align-self: flex-start; padding: 9px 22px; font-size: 14px; }
+
+.pills { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.pills li { padding: 4px 12px; font-size: 13px; background: rgba(230, 169, 35, 0.16); border: 1px solid rgba(230, 169, 35, 0.5); border-radius: 999px; }
+
+/* ========== Монгол ёс заншил ========== */
+.culture { max-width: none; background: var(--surface); border-block: 1px solid var(--line); }
+.culture > * { max-width: 1104px; margin-inline: auto; }
+.culture-grid { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 20px; }
+.culture-card { padding: 20px; background: var(--bg); border-left: 4px solid var(--gold); border-radius: 10px; transition: transform 0.25s var(--ease); }
+.culture-card:hover { transform: translateY(-4px); }
+.culture-card h3 { margin: 0 0 6px; font-family: var(--font-head); font-size: 20px; color: var(--heading); }
+.culture-card p { margin: 0; font-size: 15px; color: var(--muted); }
+
+/* ========== Multimedia ========== */
+.media-grid { display: grid; grid-template-columns: 1fr; gap: 24px; margin-top: 20px; }
+.media { margin: 0; padding: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.media video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #0e2a47; border-radius: 10px; }
+.media audio { display: block; width: 100%; margin-top: 12px; }
+.media figcaption { margin-top: 10px; font-size: 14px; color: var(--muted); }
+
+.audio-art {
+  height: 140px; border-radius: 10px;
+  background: repeating-linear-gradient(90deg, var(--accent) 0 6px, transparent 6px 14px);
+  mask-image: linear-gradient(transparent, #000 40%, transparent);
+  -webkit-mask-image: linear-gradient(transparent, #000 40%, transparent);
+  animation: wave 1.4s ease-in-out infinite alternate;
+}
+
+@keyframes wave { from { opacity: 0.5; transform: scaleY(0.8); } to { opacity: 1; transform: scaleY(1.05); } }
+
+/* ========== Дэлгэрэнгүй цонх (dialog) ========== */
+dialog { width: min(860px, 94vw); max-height: 92vh; padding: 0; color: var(--text); background: var(--surface); border: 0; border-radius: var(--radius); overflow: auto; }
+dialog::backdrop { background: rgba(5, 15, 30, 0.75); backdrop-filter: blur(4px); }
+dialog[open] { animation: pop 0.35s var(--ease); }
+@keyframes pop { from { opacity: 0; transform: scale(0.92); } to { opacity: 1; transform: none; } }
+
+.lb { display: grid; grid-template-columns: 1fr; }
+.lb-art { min-height: 220px; }
+.lb-info { padding: 22px 24px 8px; }
+.lb-info h3 { margin: 0 0 6px; font-family: var(--font-head); font-size: 28px; color: var(--heading); }
+.lb-info h4 { margin: 18px 0 6px; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.lb-info p { margin: 0; color: var(--muted); }
+.lb-info ul:not(.pills) { margin: 0; padding-left: 20px; }
+.lb-info .eyebrow { margin-bottom: 4px; color: var(--accent); }
+.lb-info .pills li { color: var(--text); }
+.lb-meta { display: flex; flex-wrap: wrap; gap: 8px 24px; margin: 14px 0 0; }
+.lb-meta div { padding: 8px 14px; background: var(--bg); border-radius: 10px; }
+.lb-meta dt { font-size: 12px; color: var(--muted); }
+.lb-meta dd { margin: 0; font-weight: 700; color: var(--heading); }
+dialog form { padding: 12px 24px 22px; text-align: right; }
+
+/* ========== CTA, Footer ========== */
+.cta { padding: 48px 20px; text-align: center; color: #fff; background: var(--accent); }
+.cta h2 { margin: 0 0 8px; font-family: var(--font-head); font-size: 28px; }
+.cta p { margin: 0 0 18px; }
+.site-footer { padding: 20px 16px; text-align: center; font-size: 14px; color: #b8c8da; background: var(--night); }
+.site-footer p { margin: 2px 0; }
+
+/* ========== Tablet ========== */
+@media (min-width: 768px) {
+  .site-header { padding: 12px 32px; }
+  .menu-toggle { display: none; }
+  .navbar { display: block; flex-basis: auto; padding: 0; order: 2; }
+  .header-tools { order: 3; }
+  .nav-list { flex-direction: row; gap: 4px; }
+  .nav-link { padding: 8px 12px; border: 0; border-bottom: 3px solid transparent; }
+  .nav-link:hover, .nav-link:focus-visible { padding-left: 12px; border-color: var(--gold); }
+
+  .hero { min-height: 460px; padding: 70px 32px; }
+  .hero h1 { font-size: 42px; }
+  .hero-sun { width: 90px; height: 90px; }
+  .section { padding: 56px 32px; }
+  .section-title { font-size: 32px; }
+  .gallery { grid-template-columns: repeat(2, 1fr); }
+  .culture-grid { grid-template-columns: repeat(2, 1fr); }
+  .media-grid { grid-template-columns: 2fr 1fr; align-items: start; }
+  .lb { grid-template-columns: 1fr 1.1fr; }
+  .lb-art { min-height: 320px; }
+}
+
+/* ========== Desktop ========== */
+@media (min-width: 1024px) {
+  .site-header { padding: 14px 48px; }
+  .hero { min-height: 540px; padding: 96px 48px; }
+  .hero h1 { font-size: 54px; }
+  .section { padding: 72px 48px; }
+  .gallery { grid-template-columns: repeat(4, 1fr); }
+  .culture-grid { grid-template-columns: repeat(4, 1fr); }
+}
+
+/* ========== Хөдөлгөөнийг хязгаарлах ========== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .progress, .cloud, .audio-art { display: none; }
+  .card { opacity: 1; }
+  /* 3D эргэлтийг орлуулж зөвхөн ард талыг гаргана */
+  .card-inner, .card:hover .card-inner, .card:focus-within .card-inner, .card.flipped .card-inner { transform: none; }
+  .back { transform: none; opacity: 0; }
+  .card:hover .back, .card:focus-within .back, .card.flipped .back { opacity: 1; }
+}

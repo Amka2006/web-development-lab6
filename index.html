@@ -4,7 +4,6 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <title>Тал нутаг: Зургийн цомог</title>
- <!-- Горимыг хуудас зурагдахаас өмнө тохируулна (гялбаа гарахаас сэргийлнэ) -->
  <script>document.documentElement.dataset.theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');</script>
  <link rel="preconnect" href="https://fonts.googleapis.com">
  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,7 +30,7 @@
   <nav class="navbar" id="menu" aria-label="Үндсэн цэс">
    <ul class="nav-list">
     <li><a class="nav-link" href="#">Нүүр</a></li>
-    <li><a class="nav-link" href="#gallery">Газрууд</a></li>
+    <li><a class="nav-link" href="#gallery">Цомог</a></li>
     <li><a class="nav-link" href="#culture">Ёс заншил</a></li>
     <li><a class="nav-link" href="#video">Видео</a></li>
     <li><a class="nav-link" href="#holboo">Холбоо барих</a></li>
@@ -47,7 +46,7 @@
    <span class="cloud c2" aria-hidden="true"></span>
    <div class="hero-text">
     <p class="eyebrow" style="--i:0">Зургийн цомог</p>
-    <h1 style="--i:1">Монголын тал нутаг</h1>
+    <h1 style="--i:1">Монголын тал нутгийн зураглал</h1>
     <p style="--i:2">Хөвсгөлөөс Говь хүртэл, Монголын хамгийн сайхан газруудыг нэг цомогт цуглуулав.</p>
     <a class="btn" href="#gallery" style="--i:3">Цомог үзэх</a>
    </div>
@@ -56,7 +55,7 @@
   <!-- Gallery -->
   <section class="section" id="gallery">
    <h2 class="section-title">Монголын үзэсгэлэнт газрууд</h2>
-   <p class="lead">Картан дээр хулганаа аваачих (утсан дээр товших) үед товч мэдээлэл гарна. «Дэлгэрэнгүй» товчийг дарж зураг, байршил, хийх зүйлийг үзнэ үү.</p>
+   <p class="lead">Картан дээр хулганаа аваачвал (утсан дээр товшвол) эргэж, ард талд нь дэлгэрэнгүй мэдээлэл болон газрын зураг гарна.</p>
 
    <div class="filters" role="group" aria-label="Бүс нутгаар шүүх">
     <button class="chip" type="button" data-filter="all" aria-pressed="true">Бүгд</button>
@@ -81,15 +80,15 @@
     </article>
     <article class="culture-card">
      <h3>Таван хошуу мал</h3>
-     <p>Адуу, үхэр, тэмээ, хонь, ямаа. Монгол айл хоол хүнс, , унаа тэргэнд хэрэглэдэг.</p>
+     <p>Адуу, үхэр, тэмээ, хонь, ямаа. Монгол айлын хоол хүнс, хувцас, унаа тэргийг тэжээдэг.</p>
     </article>
     <article class="culture-card">
      <h3>Эрийн гурван наадам</h3>
-     <p>Бөх, сур харваа, морь уралдаан. Жил бүр 7-р сард Үндэсний их баяр наадмаар тэмдэглэдэг.</p>
+     <p>Бөх, сур харваа, морь уралдаан. Жил бүр 7-р сард Үндэсний их баяр наадмаар тэмдэглэнэ.</p>
     </article>
     <article class="culture-card">
      <h3>Цагаан сар</h3>
-     <p>Шинэ жилийн баяр. Бууз, ааруул цагаан идээ,  хонины мах, айраг сөгнөж, ахмад настан , хамаатан садантайгаа золгодог</p>
+     <p>Шинэ жилийн баяр. Бууз, ааруул, шижигнэсэн хонины мах, айраг дэвшүүлж, золгон ерөөл тавина.</p>
     </article>
    </div>
   </section>
@@ -99,7 +98,6 @@
    <h2 class="section-title">Аяллын видео ба хөгжим</h2>
    <div class="media-grid">
     <figure class="media">
-     <!-- media/tal.mp4 файлаа lab06/media хавтсанд хийнэ -->
      <video controls preload="none" poster="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9'><rect width='16' height='9' fill='%230e2a47'/><circle cx='8' cy='4.5' r='1.5' fill='%23e6a923'/><path d='M7.4 3.8v1.4l1.3-.7z' fill='%230e2a47'/></svg>">
       <source src="media/tal.mp4" type="video/mp4">
       Таны хөтөч видео тоглуулахыг дэмжихгүй байна.
@@ -108,7 +106,6 @@
     </figure>
     <figure class="media">
      <div class="audio-art" aria-hidden="true"></div>
-     <!-- media/morin-huur.mp3 файлаа lab06/media хавтсанд хийнэ -->
      <audio controls preload="none">
       <source src="media/morin-huur.mp3" type="audio/mpeg">
       Таны хөтөч аудио тоглуулахыг дэмжихгүй байна.
@@ -130,10 +127,14 @@
   <p>Зургууд: Unsplash, Pexels, Wikimedia Commons (чөлөөт лиценз).</p>
  </footer>
 
- <!-- Дэлгэрэнгүй цонх -->
- <dialog id="lightbox" aria-labelledby="lbTitle">
-  <div id="lbBody"></div>
-  <form method="dialog"><button class="btn lb-close">Хаах</button></form>
+ <!-- Газрын зургийн цонх -->
+ <dialog class="map-dialog" id="mapDialog" aria-labelledby="mapTitle">
+  <div class="map-head">
+   <h3 id="mapTitle"></h3>
+   <a class="map-ext" id="mapOpen" href="#" target="_blank" rel="noopener noreferrer">Google Maps дээр нээх</a>
+   <button class="map-close" id="mapClose" type="button">Хаах</button>
+  </div>
+  <iframe id="mapFrame" title="Газрын зураг" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
  </dialog>
 
  <script src="script.js"></script>
